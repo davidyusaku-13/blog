@@ -53,11 +53,11 @@ Temporary Items
 # Logs
 logs
 *.log
-npm-debug.log*
+bun-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-.pnpm-debug.log*
+.pbun-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -100,8 +100,8 @@ web_modules/
 # TypeScript cache
 *.tsbuildinfo
 
-# Optional npm cache directory
-.npm
+# Optional bun cache directory
+.bun
 
 # Optional eslint cache
 .eslintcache
@@ -118,7 +118,7 @@ web_modules/
 # Optional REPL history
 .node_repl_history
 
-# Output of 'npm pack'
+# Output of 'bun pack'
 *.tgz
 
 # Yarn Integrity file
