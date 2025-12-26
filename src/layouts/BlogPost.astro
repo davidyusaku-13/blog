@@ -67,31 +67,38 @@ const readingTime = Math.ceil(wordCount / 200);
     </main>
     <Footer />
     <script>
-      function initTocObserver() {
-        const tocLinks = document.querySelectorAll('.toc-link');
-        const headings = document.querySelectorAll('.post-content :is(h2, h3)');
+      let tocObserver: IntersectionObserver | null = null;
 
-        if (tocLinks.length === 0 || headings.length === 0) return;
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                tocLinks.forEach((link) => {
-                  link.classList.toggle('toc-active', link.getAttribute('href') === `#${id}`);
-                });
-              }
-            });
-          },
-          { rootMargin: '-100px 0px -66%' }
-        );
-
-        headings.forEach((h) => observer.observe(h));
+    function initTocObserver() {
+      // Disconnect existing observer to prevent memory leaks
+      if (tocObserver) {
+        tocObserver.disconnect();
       }
 
-      initTocObserver();
-      document.addEventListener('astro:page-load', initTocObserver);
+      const tocLinks = document.querySelectorAll('.toc-link');
+      const headings = document.querySelectorAll('.post-content :is(h2, h3)');
+
+      if (tocLinks.length === 0 || headings.length === 0) return;
+
+      tocObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              tocLinks.forEach((link) => {
+                link.classList.toggle('toc-active', link.getAttribute('href') === `#${id}`);
+              });
+            }
+          });
+        },
+        { rootMargin: '-100px 0px -66%' }
+      );
+
+      headings.forEach((h) => tocObserver!.observe(h));
+    }
+
+    initTocObserver();
+    document.addEventListener('astro:page-load', initTocObserver);
     </script>
   </body>
 </html>
