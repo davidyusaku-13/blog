@@ -180,6 +180,53 @@ src/
 - **RSS feed:** Keep existing `/rss.xml` with full content
 - **Tags:** Lowercase, hyphenated (e.g., "react", "web-dev")
 
+## Reading Experience Enhancements (v2)
+
+### Table of Contents
+
+**Location:** Sticky sidebar on desktop (right of content), inline below title on mobile
+
+**Implementation:**
+- Extract headings from Astro's `post.render().headings`
+- Generate nested list structure (h2/h3 hierarchy)
+- Active section highlighting via IntersectionObserver
+- Smooth scroll to anchor on click
+
+**Styling:**
+- Desktop: `position: sticky; top: 100px;` max-width 200px
+- Mobile: Inline block below article header
+- Active link styling: accent color, subtle background
+
+### Progress Bar
+
+**Location:** Fixed at top of viewport (above header)
+
+**Behavior:**
+- Width: `(scrollY / (scrollHeight - viewportHeight)) × 100`
+- Height: 3px
+- Color: `--accent`
+- Smooth transition on width change
+
+**Implementation:**
+- Client-side script in BlogPost layout
+- Passive scroll event listener for performance
+- Hidden on non-blog-post pages
+
+### Code Copy Button
+
+**Location:** Absolute positioned in top-right of each `<pre>` block
+
+**Behavior:**
+- Button visible on hover (or always visible for touch devices)
+- Click copies `pre > code` text to clipboard
+- Feedback: Button text/icon changes to "Copied!" for 2 seconds
+- Fallback: Manual select if clipboard API unavailable
+
+**Styling:**
+- Small button, same width as code block padding
+- Subtle background, accent color on hover
+- Icon: simple clipboard SVG or unicode character
+
 ## Out of Scope
 
 - Comments system
