@@ -1,0 +1,57 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE_TITLE } from '../consts';
+import { projects } from '../data/projects';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Projects | ${SITE_TITLE}`} description="Projects and side projects I've built" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>Projects</h1>
+      <p class="intro">Things I've built and worked on.</p>
+
+      <div class="projects-grid">
+        {projects.map((project) => (
+          <ProjectCard
+            name={project.name}
+            description={project.description}
+            tech={project.tech}
+            github={project.github}
+            live={project.live}
+          />
+        ))}
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  h1 {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .intro {
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: var(--spacing-md);
+  }
+
+  @media (min-width: 640px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

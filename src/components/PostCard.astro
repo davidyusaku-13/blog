@@ -1,0 +1,75 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import TagPill from './TagPill.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  slug: string;
+  tags?: string[];
+}
+
+const { title, description, pubDate, slug, tags = [] } = Astro.props;
+---
+
+<article class="post-card">
+  <a href={`/blog/${slug}/`} class="post-link">
+    <h3 class="post-title">{title}</h3>
+  </a>
+  <p class="post-date">
+    <FormattedDate date={pubDate} />
+  </p>
+  <p class="post-description">{description}</p>
+  {tags.length > 0 && (
+    <div class="post-tags">
+      {tags.map((tag) => (
+        <TagPill tag={tag} />
+      ))}
+    </div>
+  )}
+</article>
+
+<style>
+  .post-card {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .post-card:last-child {
+    border-bottom: none;
+  }
+
+  .post-link {
+    text-decoration: none;
+  }
+
+  .post-title {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 1.25rem;
+    color: var(--text);
+    transition: color 0.15s ease;
+  }
+
+  .post-link:hover .post-title {
+    color: var(--accent);
+  }
+
+  .post-date {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .post-description {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>

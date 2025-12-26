@@ -1,0 +1,32 @@
+---
+interface Props {
+  tag: string;
+  href?: string;
+}
+
+const { tag, href } = Astro.props;
+const tagHref = href || `/blog/tags/${tag}/`;
+---
+
+<a href={tagHref} class="tag-pill">
+  {tag}
+</a>
+
+<style>
+  .tag-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    background-color: var(--code-bg);
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .tag-pill:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+    text-decoration: none;
+  }
+</style>
